@@ -1,0 +1,138 @@
+:root {
+  --bg: #f4f7ff;
+  --card: #ffffff;
+  --text: #101321;
+  --muted: #5b6070;
+  --primary: #5b5de6;
+  --border: #e6e9f5;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg), #ffffff);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.glass-card,
+.panel-card,
+.metric-card {
+  background: color-mix(in srgb, var(--card) 90%, white 10%);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(8, 19, 40, 0.08);
+}
+
+.metric-card {
+  padding: 1rem;
+}
+
+.metric-card p {
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+}
+
+.metric-card h4 {
+  margin: 0;
+  font-weight: 700;
+}
+
+.feature-list {
+  padding-left: 1rem;
+  color: var(--muted);
+}
+
+.feature-list li {
+  margin-bottom: 0.6rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: color-mix(in srgb, var(--primary) 85%, black 15%);
+  border-color: color-mix(in srgb, var(--primary) 85%, black 15%);
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--muted) !important;
+}
+
+.table td,
+.table th {
+  border-color: var(--border);
+}
+
+.badge-income {
+  background: rgba(25, 178, 111, 0.15);
+  color: #0b7a4c;
+}
+
+.badge-expense {
+  background: rgba(232, 76, 92, 0.15);
+  color: #b02838;
+}
+
+.theme-aurora {
+  --bg: #f4f7ff;
+  --card: #ffffff;
+  --text: #101321;
+  --muted: #5b6070;
+  --primary: #5b5de6;
+  --border: #e6e9f5;
+}
+
+.theme-midnight {
+  --bg: #111827;
+  --card: #1f2937;
+  --text: #f9fafb;
+  --muted: #9ca3af;
+  --primary: #38bdf8;
+  --border: #374151;
+}
+
+.theme-sunset {
+  --bg: #fff5eb;
+  --card: #fffaf5;
+  --text: #3d2a1b;
+  --muted: #8b6d54;
+  --primary: #f97316;
+  --border: #fed7aa;
+}
+
+.theme-forest {
+  --bg: #effaf3;
+  --card: #fbfffc;
+  --text: #173224;
+  --muted: #4e6a5b;
+  --primary: #16a34a;
+  --border: #d1fae5;
+}
+
+.theme-midnight .form-control,
+.theme-midnight .form-select,
+.theme-midnight textarea,
+.theme-midnight .card,
+.theme-midnight .table,
+.theme-midnight .table thead,
+.theme-midnight .table tbody,
+.theme-midnight .modal-content {
+  background-color: #111827;
+  color: #f9fafb;
+}
+
+@media (max-width: 768px) {
+  .display-6 {
+    font-size: 1.8rem;
+  }
+}
