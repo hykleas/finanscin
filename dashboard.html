@@ -1,0 +1,2968 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finanscın Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  /* ============================================================
+     TEMA: MAVİ (Varsayılan Açık)
+     ============================================================ */
+  :root,
+  [data-theme="blue"][data-mode="light"] {
+    /* Arka Plan */
+    --bg-primary: #f0f4f8;
+    --bg-gradient-1: #e3f2fd;
+    --bg-gradient-2: #f0f4f8;
+    --bg-gradient-3: #e8eaf6;
+    
+    /* Kartlar & Yüzeyler */
+    --card-bg: #ffffff;
+    --card-bg-hover: #fafbfc;
+    --sidebar-bg: #ffffff;
+    --header-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --input-bg: #ffffff;
+    
+    /* Yazılar */
+    --text-primary: #1a237e;
+    --text-secondary: #546e7a;
+    --text-muted: #90a4ae;
+    --text-inverse: #ffffff;
+    
+    /* Border & Ayrıcılar */
+    --border-color: #e3f2fd;
+    --border-strong: #bbdefb;
+    --divider: #e0e0e0;
+    
+    /* Ana Renk (Accent) */
+    --accent: #2196f3;
+    --accent-light: #e3f2fd;
+    --accent-dark: #1565c0;
+    --accent-gradient: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);
+    
+    /* Durum Renkleri */
+    --success: #4caf50;
+    --success-light: #e8f5e9;
+    --success-bg: rgba(76, 175, 80, 0.15);
+    --danger: #f44336;
+    --danger-light: #ffebee;
+    --danger-bg: rgba(244, 67, 54, 0.15);
+    --warning: #ff9800;
+    --warning-light: #fff3e0;
+    --warning-bg: rgba(255, 152, 0, 0.15);
+    
+    /* Gölgeler */
+    --shadow-sm: 0 2px 4px rgba(33, 150, 243, 0.08);
+    --shadow-md: 0 4px 12px rgba(33, 150, 243, 0.12);
+    --shadow-lg: 0 8px 24px rgba(33, 150, 243, 0.15);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+    
+    /* Diğer */
+    --radius: 16px;
+    --radius-sm: 10px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+    --chart-bg: #ffffff;
+  }
+
+  /* ============================================================
+     TEMA: MAVİ - Koyu Mod
+     ============================================================ */
+  [data-theme="blue"][data-mode="dark"] {
+    --bg-primary: #0d1b2a;
+    --bg-gradient-1: #0d1b2a;
+    --bg-gradient-2: #1b263b;
+    --bg-gradient-3: #0d1b2a;
+    
+    --card-bg: #1b263b;
+    --card-bg-hover: #243447;
+    --sidebar-bg: #1b263b;
+    --header-bg: #1b263b;
+    --modal-bg: #1b263b;
+    --input-bg: #243447;
+    
+    --text-primary: #e0e1dd;
+    --text-secondary: #90a4ae;
+    --text-muted: #546e7a;
+    --text-inverse: #0d1b2a;
+    
+    --border-color: #243447;
+    --border-strong: #37474f;
+    --divider: #243447;
+    
+    --accent: #42a5f5;
+    --accent-light: rgba(66, 165, 245, 0.2);
+    --accent-dark: #90caf9;
+    --accent-gradient: linear-gradient(135deg, #42a5f5 0%, #64b5f6 100%);
+    
+    --success: #66bb6a;
+    --success-light: rgba(102, 187, 106, 0.2);
+    --success-bg: rgba(102, 187, 106, 0.2);
+    --danger: #ef5350;
+    --danger-light: rgba(239, 83, 80, 0.2);
+    --danger-bg: rgba(239, 83, 80, 0.2);
+    --warning: #ffa726;
+    --warning-light: rgba(255, 167, 38, 0.2);
+    --warning-bg: rgba(255, 167, 38, 0.2);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    
+    --chart-bg: #1b263b;
+  }
+
+  /* ============================================================
+     TEMA: YEŞİL - Açık
+     ============================================================ */
+  [data-theme="green"][data-mode="light"] {
+    --bg-primary: #f1f8e9;
+    --bg-gradient-1: #dcedc8;
+    --bg-gradient-2: #f1f8e9;
+    --bg-gradient-3: #c8e6c9;
+    
+    --card-bg: #ffffff;
+    --card-bg-hover: #f9fbe7;
+    --sidebar-bg: #ffffff;
+    --header-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --input-bg: #ffffff;
+    
+    --text-primary: #1b5e20;
+    --text-secondary: #558b2f;
+    --text-muted: #9e9d24;
+    --text-inverse: #ffffff;
+    
+    --border-color: #dcedc8;
+    --border-strong: #c5e1a5;
+    --divider: #e0e0e0;
+    
+    --accent: #4caf50;
+    --accent-light: #e8f5e9;
+    --accent-dark: #2e7d32;
+    --accent-gradient: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(76, 175, 80, 0.08);
+    --shadow-md: 0 4px 12px rgba(76, 175, 80, 0.12);
+    --shadow-lg: 0 8px 24px rgba(76, 175, 80, 0.15);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ============================================================
+     TEMA: YEŞİL - Koyu
+     ============================================================ */
+  [data-theme="green"][data-mode="dark"] {
+    --bg-primary: #1b5e20;
+    --bg-gradient-1: #1b5e20;
+    --bg-gradient-2: #2e7d32;
+    --bg-gradient-3: #1b5e20;
+    
+    --card-bg: #2e7d32;
+    --card-bg-hover: #388e3c;
+    --sidebar-bg: #2e7d32;
+    --header-bg: #2e7d32;
+    --modal-bg: #2e7d32;
+    --input-bg: #388e3c;
+    
+    --text-primary: #e8f5e9;
+    --text-secondary: #c8e6c9;
+    --text-muted: #a5d6a7;
+    --text-inverse: #1b5e20;
+    
+    --border-color: #388e3c;
+    --border-strong: #4caf50;
+    --divider: #388e3c;
+    
+    --accent: #81c784;
+    --accent-light: rgba(129, 199, 132, 0.2);
+    --accent-dark: #a5d6a7;
+    --accent-gradient: linear-gradient(135deg, #81c784 0%, #a5d6a7 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    
+    --chart-bg: #2e7d32;
+  }
+
+  /* ============================================================
+     TEMA: MOR - Açık
+     ============================================================ */
+  [data-theme="purple"][data-mode="light"] {
+    --bg-primary: #f3e5f5;
+    --bg-gradient-1: #e1bee7;
+    --bg-gradient-2: #f3e5f5;
+    --bg-gradient-3: #ce93d8;
+    
+    --card-bg: #ffffff;
+    --card-bg-hover: #f3e5f5;
+    --sidebar-bg: #ffffff;
+    --header-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --input-bg: #ffffff;
+    
+    --text-primary: #4a148c;
+    --text-secondary: #7b1fa2;
+    --text-muted: #9c27b0;
+    --text-inverse: #ffffff;
+    
+    --border-color: #e1bee7;
+    --border-strong: #ce93d8;
+    --divider: #e0e0e0;
+    
+    --accent: #9c27b0;
+    --accent-light: #f3e5f5;
+    --accent-dark: #7b1fa2;
+    --accent-gradient: linear-gradient(135deg, #9c27b0 0%, #ce93d8 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(156, 39, 176, 0.08);
+    --shadow-md: 0 4px 12px rgba(156, 39, 176, 0.12);
+    --shadow-lg: 0 8px 24px rgba(156, 39, 176, 0.15);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ============================================================
+     TEMA: MOR - Koyu
+     ============================================================ */
+  [data-theme="purple"][data-mode="dark"] {
+    --bg-primary: #311b92;
+    --bg-gradient-1: #311b92;
+    --bg-gradient-2: #4527a0;
+    --bg-gradient-3: #311b92;
+    
+    --card-bg: #4527a0;
+    --card-bg-hover: #512da8;
+    --sidebar-bg: #4527a0;
+    --header-bg: #4527a0;
+    --modal-bg: #4527a0;
+    --input-bg: #512da8;
+    
+    --text-primary: #f3e5f5;
+    --text-secondary: #e1bee7;
+    --text-muted: #ce93d8;
+    --text-inverse: #311b92;
+    
+    --border-color: #512da8;
+    --border-strong: #673ab7;
+    --divider: #512da8;
+    
+    --accent: #ba68c8;
+    --accent-light: rgba(186, 104, 200, 0.2);
+    --accent-dark: #ce93d8;
+    --accent-gradient: linear-gradient(135deg, #ba68c8 0%, #ce93d8 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    
+    --chart-bg: #4527a0;
+  }
+
+  /* ============================================================
+     TEMA: TURUNCU - Açık
+     ============================================================ */
+  [data-theme="orange"][data-mode="light"] {
+    --bg-primary: #fff3e0;
+    --bg-gradient-1: #ffe0b2;
+    --bg-gradient-2: #fff3e0;
+    --bg-gradient-3: #ffcc80;
+    
+    --card-bg: #ffffff;
+    --card-bg-hover: #fff8e1;
+    --sidebar-bg: #ffffff;
+    --header-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --input-bg: #ffffff;
+    
+    --text-primary: #e65100;
+    --text-secondary: #ef6c00;
+    --text-muted: #ff8f00;
+    --text-inverse: #ffffff;
+    
+    --border-color: #ffe0b2;
+    --border-strong: #ffcc80;
+    --divider: #e0e0e0;
+    
+    --accent: #ff9800;
+    --accent-light: #fff3e0;
+    --accent-dark: #ef6c00;
+    --accent-gradient: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(255, 152, 0, 0.08);
+    --shadow-md: 0 4px 12px rgba(255, 152, 0, 0.12);
+    --shadow-lg: 0 8px 24px rgba(255, 152, 0, 0.15);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ============================================================
+     TEMA: TURUNCU - Koyu
+     ============================================================ */
+  [data-theme="orange"][data-mode="dark"] {
+    --bg-primary: #bf360c;
+    --bg-gradient-1: #bf360c;
+    --bg-gradient-2: #d84315;
+    --bg-gradient-3: #bf360c;
+    
+    --card-bg: #d84315;
+    --card-bg-hover: #e64a19;
+    --sidebar-bg: #d84315;
+    --header-bg: #d84315;
+    --modal-bg: #d84315;
+    --input-bg: #e64a19;
+    
+    --text-primary: #fff3e0;
+    --text-secondary: #ffe0b2;
+    --text-muted: #ffcc80;
+    --text-inverse: #bf360c;
+    
+    --border-color: #e64a19;
+    --border-strong: #f4511e;
+    --divider: #e64a19;
+    
+    --accent: #ffb74d;
+    --accent-light: rgba(255, 183, 77, 0.2);
+    --accent-dark: #ffcc80;
+    --accent-gradient: linear-gradient(135deg, #ffb74d 0%, #ffcc80 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    
+    --chart-bg: #d84315;
+  }
+
+  /* ============================================================
+     TEMA: KIRMIZI - Açık
+     ============================================================ */
+  [data-theme="red"][data-mode="light"] {
+    --bg-primary: #ffebee;
+    --bg-gradient-1: #ffcdd2;
+    --bg-gradient-2: #ffebee;
+    --bg-gradient-3: #ef9a9a;
+    
+    --card-bg: #ffffff;
+    --card-bg-hover: #fce4ec;
+    --sidebar-bg: #ffffff;
+    --header-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --input-bg: #ffffff;
+    
+    --text-primary: #b71c1c;
+    --text-secondary: #c62828;
+    --text-muted: #e53935;
+    --text-inverse: #ffffff;
+    
+    --border-color: #ffcdd2;
+    --border-strong: #ef9a9a;
+    --divider: #e0e0e0;
+    
+    --accent: #f44336;
+    --accent-light: #ffebee;
+    --accent-dark: #c62828;
+    --accent-gradient: linear-gradient(135deg, #f44336 0%, #ef5350 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(244, 67, 54, 0.08);
+    --shadow-md: 0 4px 12px rgba(244, 67, 54, 0.12);
+    --shadow-lg: 0 8px 24px rgba(244, 67, 54, 0.15);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ============================================================
+     TEMA: KIRMIZI - Koyu
+     ============================================================ */
+  [data-theme="red"][data-mode="dark"] {
+    --bg-primary: #8b0000;
+    --bg-gradient-1: #8b0000;
+    --bg-gradient-2: #b71c1c;
+    --bg-gradient-3: #8b0000;
+    
+    --card-bg: #b71c1c;
+    --card-bg-hover: #c62828;
+    --sidebar-bg: #b71c1c;
+    --header-bg: #b71c1c;
+    --modal-bg: #b71c1c;
+    --input-bg: #c62828;
+    
+    --text-primary: #ffebee;
+    --text-secondary: #ffcdd2;
+    --text-muted: #ef9a9a;
+    --text-inverse: #8b0000;
+    
+    --border-color: #c62828;
+    --border-strong: #d32f2f;
+    --divider: #c62828;
+    
+    --accent: #ef5350;
+    --accent-light: rgba(239, 83, 80, 0.2);
+    --accent-dark: #ef9a9a;
+    --accent-gradient: linear-gradient(135deg, #ef5350 0%, #ef9a9a 100%);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+    
+    --chart-bg: #b71c1c;
+  }
+
+  /* ============================================================
+     TEMA: SİYAH (AMOLED) - Koyu
+     ============================================================ */
+  [data-theme="black"][data-mode="dark"] {
+    --bg-primary: #000000;
+    --bg-gradient-1: #000000;
+    --bg-gradient-2: #121212;
+    --bg-gradient-3: #000000;
+    
+    --card-bg: #121212;
+    --card-bg-hover: #1e1e1e;
+    --sidebar-bg: #121212;
+    --header-bg: #121212;
+    --modal-bg: #121212;
+    --input-bg: #1e1e1e;
+    
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --text-muted: #707070;
+    --text-inverse: #000000;
+    
+    --border-color: #1e1e1e;
+    --border-strong: #333333;
+    --divider: #1e1e1e;
+    
+    --accent: #00bcd4;
+    --accent-light: rgba(0, 188, 212, 0.2);
+    --accent-dark: #4dd0e1;
+    --accent-gradient: linear-gradient(135deg, #00bcd4 0%, #4dd0e1 100%);
+    
+    --success: #4caf50;
+    --success-light: rgba(76, 175, 80, 0.2);
+    --success-bg: rgba(76, 175, 80, 0.2);
+    --danger: #f44336;
+    --danger-light: rgba(244, 67, 54, 0.2);
+    --danger-bg: rgba(244, 67, 54, 0.2);
+    --warning: #ff9800;
+    --warning-light: rgba(255, 152, 0, 0.2);
+    --warning-bg: rgba(255, 152, 0, 0.2);
+    
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.7);
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.6);
+    
+    --chart-bg: #121212;
+  }
+
+  /* ============================================================
+     GENEL STILLER
+     ============================================================ */
+  * { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+  }
+
+  html {
+    transition: all 0.3s ease;
+  }
+
+  body {
+    font-family: var(--font);
+    background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+  /* Number input spinner - gizle */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+  /* Layout */
+  .app-header {
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--accent-gradient);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverse);
+    font-size: 18px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+  }
+
+  .brand-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    transition: color 0.3s ease;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  /* Hamburger Menu Button */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+  }
+
+  .hamburger-btn:hover { background: var(--card-bg-hover); }
+
+  .hamburger-line {
+    width: 20px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .main-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: calc(100vh - 64px);
+    gap: 0;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+
+  .nav-section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    padding: 8px 12px 4px;
+    margin-top: 8px;
+    transition: color 0.3s ease;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 14px;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 2px;
+  }
+
+  .nav-item:hover { 
+    background: var(--accent-light); 
+    color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .nav-item.active { 
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
+
+  .content {
+    padding: 32px;
+    overflow-y: auto;
+    max-height: calc(100vh - 64px);
+  }
+
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 28px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  /* Summary Cards */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .summary-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: var(--card-bg-hover);
+  }
+
+  .summary-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .summary-card-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+
+  .summary-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+  }
+
+  .icon-balance { background: var(--accent-light); }
+  .icon-income { background: var(--success-light); }
+  .icon-expense { background: var(--danger-light); }
+  .icon-saving { background: var(--warning-light); }
+
+  .summary-card-value {
+    font-size: 26px;
+    font-weight: 600;
+    font-family: var(--mono);
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  .summary-card-value.positive { color: var(--success); }
+  .summary-card-value.negative { color: var(--danger); }
+
+  .summary-card-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  /* Dashboard grid */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-header {
+    padding: 20px 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  .card-body { padding: 20px 24px 24px; }
+
+  /* Chart */
+  .chart-wrapper {
+    position: relative;
+    height: 260px;
+    width: 100%;
+  }
+
+  .chart-wrapper canvas {
+    max-height: 100% !important;
+    width: 100% !important;
+  }
+
+  /* Recent transactions */
+  .tx-list { display: flex; flex-direction: column; gap: 0; }
+
+  .tx-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.15s;
+  }
+
+  .tx-item:hover { background: var(--accent-light); }
+  .tx-item:last-child { border-bottom: none; }
+
+  .tx-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tx-info { flex: 1; min-width: 0; }
+
+  .tx-desc {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+  }
+
+  .tx-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .tx-amount {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .tx-amount.income { color: var(--success); }
+  .tx-amount.expense { color: var(--danger); }
+
+  /* Goals */
+  .goal-list { display: flex; flex-direction: column; gap: 16px; }
+
+  .goal-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .goal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .goal-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  .goal-pct {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    transition: color 0.3s ease;
+  }
+
+  .goal-bar-bg {
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 99px;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .goal-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--accent-gradient);
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .goal-bar-fill.done { background: linear-gradient(90deg, var(--success), #81c784); }
+
+  .goal-amounts {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary { 
+    background: var(--accent-gradient);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:hover { 
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+    filter: brightness(1.1);
+  }
+
+  .btn-secondary { 
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover { 
+    background: var(--card-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-danger { 
+    background: var(--danger-light);
+    color: var(--danger);
+  }
+
+  .btn-danger:hover { 
+    background: var(--danger-bg);
+    transform: translateY(-1px);
+  }
+
+  .btn-sm { padding: 7px 14px; font-size: 13px; }
+  .btn-icon { padding: 8px; border-radius: var(--radius-sm); }
+
+  /* Forms */
+  .form-grid { display: grid; gap: 20px; }
+  .form-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  .form-input {
+    padding: 11px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--input-bg);
+    transition: all 0.2s ease;
+    outline: none;
+    width: 100%;
+  }
+
+  .form-input:focus { 
+    border-color: var(--accent); 
+    box-shadow: 0 0 0 4px var(--accent-light);
+  }
+
+  .form-input::placeholder { color: var(--text-muted); }
+
+  select.form-input { cursor: pointer; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--modal-bg);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    width: 520px;
+    max-width: calc(100vw - 40px);
+    transform: translateY(20px) scale(0.96);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+  .modal-header {
+    padding: 24px 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  .modal-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: none;
+    background: var(--card-bg-hover);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-secondary);
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+
+  .modal-close:hover { background: var(--border-color); color: var(--text-primary); }
+
+  .modal-body { padding: 24px 28px; }
+
+  .modal-footer {
+    padding: 0 28px 28px;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .badge-income { background: var(--success-light); color: var(--success); }
+  .badge-expense { background: var(--danger-light); color: var(--danger); }
+  .badge-cash { background: var(--warning-light); color: var(--warning); }
+
+  /* Transactions full page */
+  .tx-table-wrapper { overflow-x: auto; }
+
+  .tx-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .tx-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    background: var(--card-bg-hover);
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+  }
+
+  .tx-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    vertical-align: middle;
+    transition: all 0.3s ease;
+  }
+
+  .tx-table tr:last-child td { border-bottom: none; }
+  .tx-table tr:hover td { background: var(--accent-light); }
+
+  /* Fixed expenses page */
+  .fixed-total-bar {
+    background: var(--danger-light);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--danger);
+  }
+
+  .fixed-total-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .fixed-total-value {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--danger);
+  }
+
+  .fixed-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+    gap: 20px; 
+    margin-bottom: 28px; 
+  }
+
+  .fixed-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .fixed-card:hover { 
+    transform: translateY(-2px); 
+    box-shadow: var(--shadow-md);
+    background: var(--card-bg-hover);
+  }
+
+  .fixed-card-name { font-size: 15px; font-weight: 600; color: var(--text-primary); transition: color 0.3s ease; }
+  .fixed-card-amount { font-size: 22px; font-weight: 600; font-family: var(--mono); color: var(--danger); }
+  .fixed-card-day { font-size: 12px; color: var(--text-muted); font-weight: 500; transition: color 0.3s ease; }
+
+  .fixed-card-delete {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .fixed-card-delete:hover { background: var(--danger-light); color: var(--danger); }
+
+  /* Goals page */
+  .goals-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+  }
+
+  .goal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .goal-card:hover { 
+    transform: translateY(-2px); 
+    box-shadow: var(--shadow-md);
+    background: var(--card-bg-hover);
+  }
+
+  .goal-card-name { font-size: 16px; font-weight: 600; color: var(--text-primary); transition: color 0.3s ease; }
+
+  .goal-card-target {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .goal-card-pct {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: -1px;
+    transition: color 0.3s ease;
+  }
+
+  .goal-card-pct.done { color: var(--success); }
+
+  .goal-card-delete {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+
+  .goal-card-delete:hover { background: var(--danger-light); color: var(--danger); }
+
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text-muted);
+  }
+
+  .empty-state-icon { font-size: 44px; margin-bottom: 16px; }
+  .empty-state-text { font-size: 15px; font-weight: 600; color: var(--text-secondary); transition: color 0.3s ease; }
+  .empty-state-sub { font-size: 13px; margin-top: 6px; font-weight: 500; }
+
+  .page-actions { 
+    margin-bottom: 24px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+  }
+
+  .page-actions-title { font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--text-primary); transition: color 0.3s ease; }
+
+  /* ============================================================
+     TEMA SAYFASI STİLLERİ
+     ============================================================ */
+  .theme-section {
+    margin-bottom: 32px;
+  }
+
+  .theme-section-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+  }
+
+  .theme-section-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+  }
+
+  .theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+  }
+
+  .theme-option {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .theme-option:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+
+  .theme-option.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+
+  .theme-preview {
+    width: 100%;
+    height: 80px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .theme-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  /* Kategori mini bar */
+  .category-bar-container {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--card-bg-hover);
+    border-radius: var(--radius);
+    transition: background 0.3s ease;
+  }
+
+  .category-bar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    transition: color 0.3s ease;
+  }
+
+  .category-mini-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .category-mini-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .category-mini-label {
+    width: 80px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    transition: color 0.3s ease;
+  }
+
+  .category-mini-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 99px;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .category-mini-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.6s ease;
+  }
+
+  .category-mini-value {
+    width: 70px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--mono);
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+  }
+
+  /* ============================================================
+     WELCOME MODAL
+     ============================================================ */
+  .welcome-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .welcome-modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .welcome-modal {
+    background: var(--modal-bg);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    width: 480px;
+    max-width: calc(100vw - 40px);
+    transform: translateY(30px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  .welcome-modal-overlay.open .welcome-modal {
+    transform: translateY(0) scale(1);
+  }
+
+  .welcome-header {
+    background: var(--accent-gradient);
+    padding: 40px 32px;
+    text-align: center;
+    color: var(--text-inverse);
+    position: relative;
+  }
+
+  .welcome-icon-large {
+    font-size: 64px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  }
+
+  .welcome-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .welcome-subtitle {
+    font-size: 15px;
+    opacity: 0.9;
+    font-weight: 400;
+  }
+
+  .welcome-body {
+    padding: 40px 32px 32px;
+    text-align: center;
+  }
+
+  .welcome-text {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .welcome-input-wrapper {
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .welcome-input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: var(--text-muted);
+  }
+
+  .welcome-input {
+    width: 100%;
+    padding: 16px 16px 16px 48px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    font-family: var(--mono);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--input-bg);
+    text-align: center;
+    transition: all 0.2s ease;
+    outline: none;
+  }
+
+  .welcome-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-light);
+  }
+
+  .welcome-input::placeholder {
+    font-size: 18px;
+    color: var(--text-muted);
+  }
+
+  .welcome-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: -16px;
+    margin-bottom: 24px;
+  }
+
+  .welcome-btn {
+    width: 100%;
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--accent-gradient);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-md);
+  }
+
+  .welcome-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    filter: brightness(1.1);
+  }
+
+  .welcome-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .dashboard-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar { 
+      position: fixed; 
+      left: 0; 
+      top: 64px; 
+      width: 280px; 
+      z-index: 90;
+      transform: translateX(-100%);
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease;
+    }
+    .sidebar.open { transform: translateX(0); }
+    .hamburger-btn { display: flex; }
+    .content { padding: 20px; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .form-grid.cols-2 { grid-template-columns: 1fr; }
+    .theme-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Overlay for mobile sidebar */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 80;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .sidebar-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="app-header">
+  <div class="header-brand">
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Menüyü Aç/Kapat">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+    <div class="brand-icon">💰</div>
+    <span class="brand-name">Finanscın Panel</span>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-secondary btn-sm" id="btn-home" title="Ana Sayfaya Dön">
+      <span>🏠</span> Ana Sayfa
+    </button>
+    <button class="btn btn-primary" id="btn-add-tx">
+      <span>+</span> İşlem Ekle
+    </button>
+  </div>
+</header>
+
+<!-- Sidebar Overlay (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<!-- Main Layout -->
+<div class="main-layout">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <span class="nav-section-label">Genel</span>
+    <button class="nav-item active" data-page="dashboard">
+      <span class="nav-icon">📊</span> Dashboard
+    </button>
+    <button class="nav-item" data-page="transactions">
+      <span class="nav-icon">🔄</span> İşlemler
+    </button>
+    <span class="nav-section-label">Yönetim</span>
+    <button class="nav-item" data-page="fixed">
+      <span class="nav-icon">📌</span> Sabit Giderler
+    </button>
+    <button class="nav-item" data-page="goals">
+      <span class="nav-icon">🎯</span> Hedefler
+    </button>
+    <button class="nav-item" data-page="theme">
+      <span class="nav-icon">🎨</span> Tema
+    </button>
+  </nav>
+
+  <!-- Content -->
+  <main class="content">
+
+    <!-- Dashboard Page -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-title">Genel Bakış</div>
+
+      <div class="summary-grid" id="summary-grid">
+        <!-- Bakiye Kartı -->
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Güncel Bakiye</span>
+            <div class="summary-card-icon icon-balance">💎</div>
+          </div>
+          <div class="summary-card-value" id="sum-balance">₺0,00</div>
+          <div class="summary-card-sub">Toplam birikmiş bakiye</div>
+        </div>
+        <!-- Gelir Kartı -->
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Toplam Gelir</span>
+            <div class="summary-card-icon icon-income">📈</div>
+          </div>
+          <div class="summary-card-value positive" id="sum-income">₺0,00</div>
+          <div class="summary-card-sub">Tüm gelirler</div>
+        </div>
+        <!-- Gider Kartı -->
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Toplam Gider</span>
+            <div class="summary-card-icon icon-expense">📉</div>
+          </div>
+          <div class="summary-card-value negative" id="sum-expense">₺0,00</div>
+          <div class="summary-card-sub">İşlemler + Sabit giderler</div>
+        </div>
+        <!-- Sabit Gider Kartı -->
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Sabit Gider (Aylık)</span>
+            <div class="summary-card-icon icon-saving">📌</div>
+          </div>
+          <div class="summary-card-value" id="sum-fixed">₺0,00</div>
+          <div class="summary-card-sub">Aylık yükümlülük</div>
+        </div>
+        <!-- Ekstra Özet Kartları -->
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Net Tasarruf</span>
+            <div class="summary-card-icon icon-saving">💰</div>
+          </div>
+          <div class="summary-card-value" id="sum-savings">₺0,00</div>
+          <div class="summary-card-sub">Gelir - Gider farkı</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Bu Ayki İşlem</span>
+            <div class="summary-card-icon icon-balance">📅</div>
+          </div>
+          <div class="summary-card-value" id="sum-month-tx">0</div>
+          <div class="summary-card-sub">İşlem sayısı</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Ort. Günlük Harcama</span>
+            <div class="summary-card-icon icon-expense">📊</div>
+          </div>
+          <div class="summary-card-value negative" id="sum-daily-avg">₺0,00</div>
+          <div class="summary-card-sub">Günlük ortalama</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-card-header">
+            <span class="summary-card-label">Aktif Hedef</span>
+            <div class="summary-card-icon icon-income">🎯</div>
+          </div>
+          <div class="summary-card-value" id="sum-active-goals">0</div>
+          <div class="summary-card-sub">Devam eden hedefler</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <!-- Chart -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Gider Dağılımı</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <canvas id="expense-chart"></canvas>
+              </div>
+              <!-- Kategori Mini Barları -->
+              <div class="category-bar-container">
+                <div class="category-bar-title">Kategori Dağılımı</div>
+                <div class="category-mini-bars" id="category-mini-bars"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Transactions -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Son İşlemler</span>
+              <button class="btn btn-sm btn-secondary" onclick="App.navigate('transactions')">Tümü →</button>
+            </div>
+            <div class="card-body" style="padding-top:16px;">
+              <div class="tx-list" id="recent-tx-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right panel -->
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <!-- Goals summary -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Hedefler</span>
+              <button class="btn btn-sm btn-secondary" onclick="App.navigate('goals')">Yönet →</button>
+            </div>
+            <div class="card-body" style="padding-top:16px;">
+              <div class="goal-list" id="dashboard-goals"></div>
+            </div>
+          </div>
+
+          <!-- Fixed expenses summary -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Sabit Giderler</span>
+              <button class="btn btn-sm btn-secondary" onclick="App.navigate('fixed')">Yönet →</button>
+            </div>
+            <div class="card-body" style="padding-top:16px;">
+              <div class="tx-list" id="dashboard-fixed"></div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Hızlı İstatistikler</span>
+            </div>
+            <div class="card-body">
+              <div class="goal-list" id="quick-stats"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transactions Page -->
+    <div class="page" id="page-transactions">
+      <div class="page-actions">
+        <span class="page-actions-title">İşlemler</span>
+        <button class="btn btn-primary" id="btn-add-tx-2">
+          <span>+</span> İşlem Ekle
+        </button>
+      </div>
+      <div class="card">
+        <div class="tx-table-wrapper">
+          <table class="tx-table">
+            <thead>
+              <tr>
+                <th>Tür</th>
+                <th>Açıklama</th>
+                <th>Kategori</th>
+                <th>Tarih</th>
+                <th>Tutar</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tx-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fixed Expenses Page -->
+    <div class="page" id="page-fixed">
+      <div class="page-actions">
+        <span class="page-actions-title">Sabit Giderler</span>
+        <button class="btn btn-primary" id="btn-add-fixed">
+          <span>+</span> Sabit Gider Ekle
+        </button>
+      </div>
+      <div class="fixed-total-bar">
+        <span class="fixed-total-label">Aylık Toplam Sabit Gider</span>
+        <span class="fixed-total-value" id="fixed-total">₺0,00</span>
+      </div>
+      <div class="fixed-grid" id="fixed-grid"></div>
+    </div>
+
+    <!-- Goals Page -->
+    <div class="page" id="page-goals">
+      <div class="page-actions">
+        <span class="page-actions-title">Birikim Hedefleri</span>
+        <button class="btn btn-primary" id="btn-add-goal">
+          <span>+</span> Hedef Ekle
+        </button>
+      </div>
+      <div class="goals-grid" id="goals-grid"></div>
+    </div>
+
+    <!-- Theme Page -->
+    <div class="page" id="page-theme">
+      <div class="page-title">Tema Ayarları</div>
+      
+      <!-- Açık/Koyu Tema -->
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="card-body">
+          <div class="theme-section">
+            <div class="theme-section-title">🌓 Tema Modu</div>
+            <div class="theme-section-desc">Arayüzün açık veya koyu modda görünmesini seçin</div>
+            <div class="theme-grid" style="max-width: 400px;">
+              <div class="theme-option" data-mode="light">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);">☀️</div>
+                <div class="theme-name">Açık Tema</div>
+              </div>
+              <div class="theme-option" data-mode="dark">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">🌙</div>
+                <div class="theme-name">Koyu Tema</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Renk Teması -->
+      <div class="card">
+        <div class="card-body">
+          <div class="theme-section">
+            <div class="theme-section-title">🎨 Renk Teması</div>
+            <div class="theme-section-desc">Uygulamanın ana renk paletini seçin</div>
+            <div class="theme-grid">
+              <div class="theme-option" data-theme="blue">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);"></div>
+                <div class="theme-name">Mavi</div>
+              </div>
+              <div class="theme-option" data-theme="green">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);"></div>
+                <div class="theme-name">Yeşil</div>
+              </div>
+              <div class="theme-option" data-theme="purple">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #9c27b0 0%, #ce93d8 100%);"></div>
+                <div class="theme-name">Mor</div>
+              </div>
+              <div class="theme-option" data-theme="orange">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);"></div>
+                <div class="theme-name">Turuncu</div>
+              </div>
+              <div class="theme-option" data-theme="red">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #f44336 0%, #ef5350 100%);"></div>
+                <div class="theme-name">Kırmızı</div>
+              </div>
+              <div class="theme-option" data-theme="black">
+                <div class="theme-preview" style="background: linear-gradient(135deg, #000000 0%, #333333 100%);">🖤</div>
+                <div class="theme-name">Siyah (AMOLED)</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+            <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--text-primary);">💰 Başlangıç Bakiyesi</h3>
+            <div class="form-grid cols-2" style="max-width: 400px;">
+              <div class="form-group">
+                <label class="form-label">Mevcut Bakiye (₺)</label>
+                <input class="form-input" type="number" id="initial-balance-input" placeholder="0,00" min="0" step="0.01">
+              </div>
+              <div class="form-group" style="display: flex; align-items: flex-end;">
+                <button class="btn btn-primary" id="btn-save-balance" style="width: 100%;">Bakiyeyi Güncelle</button>
+              </div>
+            </div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">* Bu değer mevcut hesaplamalara eklenecektir</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODALS -->
+
+<!-- Welcome Modal -->
+<div class="welcome-modal-overlay" id="modal-welcome">
+  <div class="welcome-modal">
+    <div class="welcome-header">
+      <div class="welcome-icon-large">🎉</div>
+      <div class="welcome-title">Hoş Geldiniz!</div>
+      <div class="welcome-subtitle">Finanscın Panel'e ilk kez giriş yapıyorsunuz</div>
+    </div>
+    <div class="welcome-body">
+      <div class="welcome-text">
+        Başlamak için lütfen mevcut bakiyenizi girin.<br>
+        Bu bilgi finansal takibinizi doğru yapmanızı sağlayacaktır.
+      </div>
+      <div class="welcome-input-wrapper">
+        <span class="welcome-input-icon">💵</span>
+        <input class="welcome-input" type="number" id="welcome-balance" placeholder="0,00" min="0" step="0.01" autocomplete="off">
+      </div>
+      <div class="welcome-hint">Örn: 5000 veya 1250.50</div>
+      <button class="welcome-btn" id="btn-welcome-save">Başlayalım 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Transaction Modal -->
+<div class="modal-overlay" id="modal-tx">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">İşlem Ekle</span>
+      <button class="modal-close" data-close="modal-tx">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid cols-2">
+        <div class="form-group">
+          <label class="form-label">İşlem Türü</label>
+          <select class="form-input" id="tx-type">
+            <option value="income">Gelir</option>
+            <option value="expense">Gider</option>
+            <option value="cash">Ani Nakit Girişi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tutar (₺)</label>
+          <input class="form-input" type="number" id="tx-amount" placeholder="0,00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kategori</label>
+          <select class="form-input" id="tx-category">
+            <option value="Maaş">Maaş</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Kira">Kira</option>
+            <option value="Market">Market</option>
+            <option value="Fatura">Fatura</option>
+            <option value="Sağlık">Sağlık</option>
+            <option value="Ulaşım">Ulaşım</option>
+            <option value="Eğitim">Eğitim</option>
+            <option value="Eğlence">Eğlence</option>
+            <option value="Giyim">Giyim</option>
+            <option value="Restoran">Restoran</option>
+            <option value="Nakit">Nakit</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tarih</label>
+          <input class="form-input" type="date" id="tx-date">
+        </div>
+        <div class="form-group" style="grid-column: 1/-1;">
+          <label class="form-label">Açıklama</label>
+          <input class="form-input" type="text" id="tx-desc" placeholder="İşlem açıklaması...">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="modal-tx">İptal</button>
+      <button class="btn btn-primary" id="btn-save-tx">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Fixed Expense Modal -->
+<div class="modal-overlay" id="modal-fixed">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Sabit Gider Ekle</span>
+      <button class="modal-close" data-close="modal-fixed">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid cols-2">
+        <div class="form-group" style="grid-column: 1/-1;">
+          <label class="form-label">Gider Adı</label>
+          <input class="form-input" type="text" id="fixed-name" placeholder="Kira, Abonelik, vb.">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tutar (₺)</label>
+          <input class="form-input" type="number" id="fixed-amount" placeholder="0,00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ayın Günü</label>
+          <input class="form-input" type="number" id="fixed-day" placeholder="1-31" min="1" max="31">
+        </div>
+        <div class="form-group" style="grid-column: 1/-1;">
+          <label class="form-label">Kategori</label>
+          <select class="form-input" id="fixed-cat">
+            <option value="Kira">Kira</option>
+            <option value="Fatura">Fatura</option>
+            <option value="Abonelik">Abonelik</option>
+            <option value="Sigorta">Sigorta</option>
+            <option value="Kredi">Kredi</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="modal-fixed">İptal</button>
+      <button class="btn btn-primary" id="btn-save-fixed">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Goal Modal -->
+<div class="modal-overlay" id="modal-goal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Hedef Ekle</span>
+      <button class="modal-close" data-close="modal-goal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column: 1/-1;">
+          <label class="form-label">Hedef Adı</label>
+          <input class="form-input" type="text" id="goal-name" placeholder="Araba, Tatil, Ev, vb.">
+        </div>
+        <div class="form-group" style="grid-column: 1/-1;">
+          <label class="form-label">Hedef Tutar (₺)</label>
+          <input class="form-input" type="number" id="goal-target" placeholder="0,00" min="0" step="0.01">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="modal-goal">İptal</button>
+      <button class="btn btn-primary" id="btn-save-goal">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// StorageService
+// ============================================================
+const StorageService = {
+  get(key) {
+    try { return JSON.parse(localStorage.getItem(key)); }
+    catch { return null; }
+  },
+  set(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+  },
+  remove(key) {
+    localStorage.removeItem(key);
+  }
+};
+
+// ============================================================
+// DataService
+// ============================================================
+const DataService = {
+  KEYS: { 
+    transactions: 'fin_transactions', 
+    fixed: 'fin_fixed', 
+    goals: 'fin_goals',
+    initialBalance: 'fin_initial_balance',
+    hasVisited: 'fin_has_visited',
+    theme: 'fin_theme',
+    themeMode: 'fin_theme_mode'
+  },
+
+  getInitialBalance() {
+    const val = StorageService.get(this.KEYS.initialBalance);
+    return val === null ? 0 : parseFloat(val) || 0;
+  },
+  
+  setInitialBalance(amount) {
+    const val = parseFloat(amount);
+    StorageService.set(this.KEYS.initialBalance, isNaN(val) ? 0 : val);
+  },
+
+  hasVisited() {
+    return StorageService.get(this.KEYS.hasVisited) === true;
+  },
+
+  setVisited() {
+    StorageService.set(this.KEYS.hasVisited, true);
+  },
+
+  getTheme() {
+    return StorageService.get(this.KEYS.theme) || 'blue';
+  },
+  
+  setTheme(theme) {
+    StorageService.set(this.KEYS.theme, theme);
+  },
+
+  getThemeMode() {
+    return StorageService.get(this.KEYS.themeMode) || 'light';
+  },
+  
+  setThemeMode(mode) {
+    StorageService.set(this.KEYS.themeMode, mode);
+  },
+
+  getTransactions() { return StorageService.get(this.KEYS.transactions) || []; },
+  saveTransactions(list) { StorageService.set(this.KEYS.transactions, list); },
+
+  addTransaction(tx) {
+    const list = this.getTransactions();
+    tx.id = Date.now().toString(36) + Math.random().toString(36).slice(2);
+    tx.createdAt = new Date().toISOString();
+    list.unshift(tx);
+    this.saveTransactions(list);
+    return tx;
+  },
+
+  deleteTransaction(id) {
+    const list = this.getTransactions().filter(t => t.id !== id);
+    this.saveTransactions(list);
+  },
+
+  getTransactionsThisMonth() {
+    const txs = this.getTransactions();
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    return txs.filter(tx => {
+      const txDate = new Date(tx.date);
+      return txDate.getMonth() === currentMonth && txDate.getFullYear() === currentYear;
+    });
+  },
+
+  getFixed() { return StorageService.get(this.KEYS.fixed) || []; },
+  saveFixed(list) { StorageService.set(this.KEYS.fixed, list); },
+
+  addFixed(item) {
+    const list = this.getFixed();
+    item.id = Date.now().toString(36) + Math.random().toString(36).slice(2);
+    list.push(item);
+    this.saveFixed(list);
+    return item;
+  },
+
+  deleteFixed(id) {
+    const list = this.getFixed().filter(f => f.id !== id);
+    this.saveFixed(list);
+  },
+
+  getTotalFixed() {
+    return this.getFixed().reduce((s, f) => s + Number(f.amount), 0);
+  },
+
+  getGoals() { return StorageService.get(this.KEYS.goals) || []; },
+  saveGoals(list) { StorageService.set(this.KEYS.goals, list); },
+
+  addGoal(g) {
+    const list = this.getGoals();
+    g.id = Date.now().toString(36) + Math.random().toString(36).slice(2);
+    g.createdAt = new Date().toISOString();
+    list.push(g);
+    this.saveGoals(list);
+    return g;
+  },
+
+  deleteGoal(id) {
+    const list = this.getGoals().filter(g => g.id !== id);
+    this.saveGoals(list);
+  },
+
+  getActiveGoalsCount() {
+    const goals = this.getGoals();
+    const { balance } = this.calcSummary();
+    return goals.filter(g => balance < g.target).length;
+  },
+
+  calcSummary() {
+    const txs = this.getTransactions();
+    const initialBalance = this.getInitialBalance();
+    let income = 0, expense = 0;
+    
+    for (const tx of txs) {
+      if (tx.type === 'income' || tx.type === 'cash') income += Number(tx.amount);
+      else expense += Number(tx.amount);
+    }
+    
+    const fixedTotal = this.getTotalFixed();
+    const totalExpense = expense + fixedTotal;
+    const balance = initialBalance + income - totalExpense;
+    const savings = income - totalExpense;
+    
+    const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+    const currentDay = Math.max(1, new Date().getDate());
+    const dailyAvg = totalExpense / currentDay;
+
+    return { 
+      income, 
+      expense, 
+      fixedTotal, 
+      totalExpense, 
+      balance, 
+      savings,
+      dailyAvg: Math.max(0, dailyAvg),
+      initialBalance
+    };
+  },
+
+  calcGoalProgress(goal) {
+    const { balance } = this.calcSummary();
+    const current = Math.max(0, balance);
+    const pct = goal.target > 0 ? Math.min(100, (current / goal.target) * 100) : 0;
+    return { current, pct: Math.round(pct * 10) / 10 };
+  },
+
+  getExpenseBreakdown() {
+    const txs = this.getTransactions().filter(t => t.type === 'expense');
+    const fixed = this.getFixed();
+    const map = {};
+
+    for (const tx of txs) {
+      const cat = tx.category || 'Diğer';
+      map[cat] = (map[cat] || 0) + Number(tx.amount);
+    }
+    for (const f of fixed) {
+      const cat = f.category || 'Diğer';
+      map[cat] = (map[cat] || 0) + Number(f.amount);
+    }
+    return map;
+  },
+
+  getCategoryColors() {
+    return {
+      'Kira': '#f44336',
+      'Fatura': '#ff9800',
+      'Market': '#4caf50',
+      'Ulaşım': '#2196f3',
+      'Sağlık': '#9c27b0',
+      'Eğlence': '#ff5722',
+      'Restoran': '#e91e63',
+      'Giyim': '#00bcd4',
+      'Eğitim': '#009688',
+      'Abonelik': '#ffc107',
+      'Sigorta': '#673ab7',
+      'Kredi': '#b71c1c',
+      'Freelance': '#4caf50',
+      'Maaş': '#2e7d32',
+      'Nakit': '#ff8f00',
+      'Diğer': '#757575'
+    };
+  }
+};
+
+// ============================================================
+// UIService
+// ============================================================
+const UIService = {
+  fmt(n) {
+    return '₺' + Number(n).toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  },
+
+  fmtInt(n) {
+    return Number(n).toLocaleString('tr-TR');
+  },
+
+  fmtDate(str) {
+    if (!str) return '-';
+    const d = new Date(str);
+    return d.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+  },
+
+  typeLabel(type) {
+    return { income: 'Gelir', expense: 'Gider', cash: 'Nakit' }[type] || type;
+  },
+
+  typeIcon(type) {
+    return { income: '💹', expense: '💸', cash: '💵' }[type] || '🔄';
+  },
+
+  typeBg(type) {
+    const root = getComputedStyle(document.documentElement);
+    if (type === 'income') return 'var(--success-light)';
+    if (type === 'expense') return 'var(--danger-light)';
+    if (type === 'cash') return 'var(--warning-light)';
+    return 'var(--card-bg-hover)';
+  },
+
+  renderSummary(s) {
+    const balEl = document.getElementById('sum-balance');
+    const incEl = document.getElementById('sum-income');
+    const expEl = document.getElementById('sum-expense');
+    const fixEl = document.getElementById('sum-fixed');
+    const savEl = document.getElementById('sum-savings');
+    const monthTxEl = document.getElementById('sum-month-tx');
+    const dailyAvgEl = document.getElementById('sum-daily-avg');
+    const activeGoalsEl = document.getElementById('sum-active-goals');
+
+    if (balEl) {
+      balEl.textContent = this.fmt(s.balance);
+      balEl.className = 'summary-card-value' + (s.balance >= 0 ? ' positive' : ' negative');
+    }
+    if (incEl) incEl.textContent = this.fmt(s.income);
+    if (expEl) expEl.textContent = this.fmt(s.totalExpense);
+    if (fixEl) fixEl.textContent = this.fmt(s.fixedTotal);
+    
+    if (savEl) {
+      savEl.textContent = this.fmt(s.savings);
+      savEl.className = 'summary-card-value' + (s.savings >= 0 ? ' positive' : ' negative');
+    }
+    
+    const monthTx = DataService.getTransactionsThisMonth();
+    if (monthTxEl) monthTxEl.textContent = this.fmtInt(monthTx.length);
+    
+    if (dailyAvgEl) dailyAvgEl.textContent = this.fmt(s.dailyAvg);
+    
+    const activeGoals = DataService.getActiveGoalsCount();
+    if (activeGoalsEl) activeGoalsEl.textContent = this.fmtInt(activeGoals);
+  },
+
+  renderRecentTx(txs) {
+    const el = document.getElementById('recent-tx-list');
+    if (!el) return;
+    if (!txs.length) {
+      el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">Henüz işlem yok</div></div>';
+      return;
+    }
+    el.innerHTML = txs.slice(0, 6).map(tx => `
+      <div class="tx-item">
+        <div class="tx-icon" style="background:${this.typeBg(tx.type)}">${this.typeIcon(tx.type)}</div>
+        <div class="tx-info">
+          <div class="tx-desc">${tx.description || tx.category}</div>
+          <div class="tx-meta">${tx.category} · ${this.fmtDate(tx.date)}</div>
+        </div>
+        <div class="tx-amount ${tx.type === 'expense' ? 'expense' : 'income'}">
+          ${tx.type === 'expense' ? '-' : '+'}${this.fmt(tx.amount)}
+        </div>
+      </div>
+    `).join('');
+  },
+
+  renderTxTable(txs) {
+    const el = document.getElementById('tx-table-body');
+    if (!el) return;
+    if (!txs.length) {
+      el.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">Henüz işlem yok</div><div class="empty-state-sub">İşlem ekle butonunu kullan</div></div></td></tr>`;
+      return;
+    }
+    el.innerHTML = txs.map(tx => `
+      <tr>
+        <td><span class="badge badge-${tx.type}">${this.typeLabel(tx.type)}</span></td>
+        <td>${tx.description || '-'}</td>
+        <td>${tx.category}</td>
+        <td>${this.fmtDate(tx.date)}</td>
+        <td class="tx-amount ${tx.type === 'expense' ? 'expense' : 'income'}">
+          ${tx.type === 'expense' ? '-' : '+'}${this.fmt(tx.amount)}
+        </td>
+        <td>
+          <button class="btn btn-sm btn-danger btn-icon" onclick="App.deleteTx('${tx.id}')" title="Sil">🗑</button>
+        </td>
+      </tr>
+    `).join('');
+  },
+
+  renderFixed(items) {
+    const grid = document.getElementById('fixed-grid');
+    const total = document.getElementById('fixed-total');
+    const dash = document.getElementById('dashboard-fixed');
+    if (!grid || !total) return;
+    
+    const sum = items.reduce((s, f) => s + Number(f.amount), 0);
+    total.textContent = this.fmt(sum);
+
+    if (!items.length) {
+      const empty = `<div class="empty-state"><div class="empty-state-icon">📌</div><div class="empty-state-text">Sabit gider yok</div></div>`;
+      grid.innerHTML = empty;
+      if (dash) dash.innerHTML = empty;
+      return;
+    }
+
+    grid.innerHTML = items.map(f => `
+      <div class="fixed-card">
+        <button class="fixed-card-delete" onclick="App.deleteFixed('${f.id}')" title="Sil">✕</button>
+        <div class="fixed-card-name">${f.name}</div>
+        <div class="fixed-card-amount">${this.fmt(f.amount)}</div>
+        <div class="fixed-card-day">Her ayın ${f.day}. günü · ${f.category}</div>
+      </div>
+    `).join('');
+
+    if (dash) {
+      dash.innerHTML = items.slice(0, 5).map(f => `
+        <div class="tx-item">
+          <div class="tx-icon" style="background:var(--danger-light)">📌</div>
+          <div class="tx-info">
+            <div class="tx-desc">${f.name}</div>
+            <div class="tx-meta">Her ayın ${f.day}. günü · ${f.category}</div>
+          </div>
+          <div class="tx-amount expense">-${this.fmt(f.amount)}</div>
+        </div>
+      `).join('');
+    }
+  },
+
+  renderGoals(goals, balance) {
+    const grid = document.getElementById('goals-grid');
+    const dash = document.getElementById('dashboard-goals');
+    if (!grid) return;
+    
+    const current = Math.max(0, balance);
+
+    if (!goals.length) {
+      const empty = `<div class="empty-state"><div class="empty-state-icon">🎯</div><div class="empty-state-text">Henüz hedef yok</div></div>`;
+      grid.innerHTML = empty;
+      if (dash) dash.innerHTML = empty;
+      return;
+    }
+
+    const goalHtml = goals.map(g => {
+      const pct = g.target > 0 ? Math.min(100, (current / g.target) * 100) : 0;
+      const done = pct >= 100;
+      return { g, pct, done };
+    });
+
+    grid.innerHTML = goalHtml.map(({ g, pct, done }) => `
+      <div class="goal-card">
+        <button class="goal-card-delete" onclick="App.deleteGoal('${g.id}')" title="Sil">✕</button>
+        <div class="goal-card-name">${g.name}</div>
+        <div class="goal-card-pct ${done ? 'done' : ''}">${pct.toFixed(1)}%</div>
+        <div class="goal-bar-bg">
+          <div class="goal-bar-fill ${done ? 'done' : ''}" style="width:${pct}%"></div>
+        </div>
+        <div class="goal-amounts">
+          <span>${this.fmt(Math.min(current, g.target))} birikti</span>
+          <span>Hedef: ${this.fmt(g.target)}</span>
+        </div>
+        ${done ? '<div style="font-size:13px;color:var(--success);font-weight:600;">🎉 Hedefe ulaştın!</div>' : ''}
+        <div class="goal-card-target">Güncel bakiye: ${this.fmt(current)}</div>
+      </div>
+    `).join('');
+
+    if (dash) {
+      dash.innerHTML = goalHtml.slice(0, 4).map(({ g, pct, done }) => `
+        <div class="goal-item">
+          <div class="goal-header">
+            <span class="goal-name">${g.name}</span>
+            <span class="goal-pct">${pct.toFixed(1)}%</span>
+          </div>
+          <div class="goal-bar-bg">
+            <div class="goal-bar-fill ${done ? 'done' : ''}" style="width:${pct}%"></div>
+          </div>
+          <div class="goal-amounts">
+            <span>${this.fmt(Math.min(current, g.target))}</span>
+            <span>${this.fmt(g.target)}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  },
+
+  renderCategoryBars(breakdown) {
+    const container = document.getElementById('category-mini-bars');
+    if (!container) return;
+    
+    const total = Object.values(breakdown).reduce((a, b) => a + b, 0);
+    const colors = DataService.getCategoryColors();
+    
+    if (!total) {
+      container.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:13px;padding:20px;">Henüz gider kaydı yok</div>';
+      return;
+    }
+
+    const sorted = Object.entries(breakdown).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    
+    container.innerHTML = sorted.map(([cat, amount]) => {
+      const pct = (amount / total) * 100;
+      const color = colors[cat] || '#757575';
+      return `
+        <div class="category-mini-item">
+          <div class="category-mini-label">${cat}</div>
+          <div class="category-mini-bar-bg">
+            <div class="category-mini-bar-fill" style="width:${pct}%;background:${color};"></div>
+          </div>
+          <div class="category-mini-value">${this.fmt(amount)}</div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  renderQuickStats(summary) {
+    const container = document.getElementById('quick-stats');
+    if (!container) return;
+    
+    const txs = DataService.getTransactions();
+    const incomeTx = txs.filter(t => t.type === 'income' || t.type === 'cash').length;
+    const expenseTx = txs.filter(t => t.type === 'expense').length;
+    
+    container.innerHTML = `
+      <div class="goal-item" style="margin-bottom:12px;">
+        <div class="goal-header">
+          <span class="goal-name" style="font-size:13px;">Gelir İşlemleri</span>
+          <span style="font-size:13px;font-weight:600;color:var(--success);">${incomeTx}</span>
+        </div>
+      </div>
+      <div class="goal-item" style="margin-bottom:12px;">
+        <div class="goal-header">
+          <span class="goal-name" style="font-size:13px;">Gider İşlemleri</span>
+          <span style="font-size:13px;font-weight:600;color:var(--danger);">${expenseTx}</span>
+        </div>
+      </div>
+      <div class="goal-item">
+        <div class="goal-header">
+          <span class="goal-name" style="font-size:13px;">Başlangıç Bakiyesi</span>
+          <span style="font-size:13px;font-weight:600;">${this.fmt(summary.initialBalance)}</span>
+        </div>
+      </div>
+    `;
+  }
+};
+
+// ============================================================
+// ChartService
+// ============================================================
+const ChartService = {
+  chart: null,
+  COLORS: ['#2196f3','#f44336','#4caf50','#ff9800','#9c27b0','#009688','#ff5722','#e91e63','#00bcd4','#8bc34a','#673ab7','#795548'],
+
+  init() {
+    const ctx = document.getElementById('expense-chart');
+    if (!ctx) return;
+    
+    this.chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: { 
+        labels: [], 
+        datasets: [{ 
+          data: [], 
+          backgroundColor: this.COLORS, 
+          borderWidth: 3, 
+          borderColor: 'var(--chart-bg)', 
+          hoverBorderWidth: 4,
+          hoverOffset: 4
+        }] 
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '68%',
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: {
+              font: { family: 'DM Sans', size: 12, weight: '500' },
+              padding: 16,
+              usePointStyle: true,
+              pointStyle: 'circle',
+              color: 'var(--text-primary)'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 12,
+            cornerRadius: 8,
+            callbacks: {
+              label: ctx => ` ${ctx.label}: ₺${Number(ctx.parsed).toLocaleString('tr-TR', {minimumFractionDigits:2})}`
+            }
+          }
+        },
+        animation: {
+          animateRotate: true,
+          duration: 1000
+        }
+      }
+    });
+  },
+
+  update() {
+    if (!this.chart) return;
+    
+    const breakdown = DataService.getExpenseBreakdown();
+    const labels = Object.keys(breakdown);
+    const data = Object.values(breakdown);
+    const colors = DataService.getCategoryColors();
+
+    if (!labels.length) {
+      this.chart.data.labels = ['Gider yok'];
+      this.chart.data.datasets[0].data = [1];
+      this.chart.data.datasets[0].backgroundColor = ['var(--border-color)'];
+    } else {
+      this.chart.data.labels = labels;
+      this.chart.data.datasets[0].data = data;
+      this.chart.data.datasets[0].backgroundColor = labels.map(l => colors[l] || '#757575');
+    }
+    this.chart.update('active');
+    
+    UIService.renderCategoryBars(breakdown);
+  }
+};
+
+// ============================================================
+// App Controller
+// ============================================================
+const App = {
+  currentPage: 'dashboard',
+  sidebarOpen: false,
+
+  init() {
+    this.loadTheme();
+    this.bindNav();
+    this.bindModals();
+    this.bindForms();
+    this.bindSidebar();
+    this.bindTheme();
+    this.checkFirstVisit();
+    ChartService.init();
+
+    const dateInput = document.getElementById('tx-date');
+    if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+
+    this.renderAll();
+  },
+
+  loadTheme() {
+    const theme = DataService.getTheme();
+    const mode = DataService.getThemeMode();
+    
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.setAttribute('data-mode', mode);
+    
+    setTimeout(() => {
+      document.querySelectorAll('.theme-option[data-theme]').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.theme === theme);
+      });
+      document.querySelectorAll('.theme-option[data-mode]').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.mode === mode);
+      });
+    }, 0);
+  },
+
+  checkFirstVisit() {
+    if (!DataService.hasVisited()) {
+      this.openWelcomeModal();
+    } else {
+      const currentBalance = DataService.getInitialBalance();
+      const balanceInput = document.getElementById('initial-balance-input');
+      if (balanceInput) balanceInput.value = currentBalance || '';
+    }
+  },
+
+  openWelcomeModal() {
+    const modal = document.getElementById('modal-welcome');
+    if (modal) {
+      modal.classList.add('open');
+      setTimeout(() => {
+        const input = document.getElementById('welcome-balance');
+        if (input) input.focus();
+      }, 300);
+    }
+  },
+
+  renderAll() {
+    const summary = DataService.calcSummary();
+    const txs = DataService.getTransactions();
+    const fixed = DataService.getFixed();
+    const goals = DataService.getGoals();
+
+    UIService.renderSummary(summary);
+    UIService.renderRecentTx(txs);
+    UIService.renderTxTable(txs);
+    UIService.renderFixed(fixed);
+    UIService.renderGoals(goals, summary.balance);
+    UIService.renderQuickStats(summary);
+    ChartService.update();
+  },
+
+  navigate(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    const targetPage = document.getElementById('page-' + page);
+    const targetNav = document.querySelector(`[data-page="${page}"]`);
+    
+    if (targetPage) targetPage.classList.add('active');
+    if (targetNav) targetNav.classList.add('active');
+    
+    this.currentPage = page;
+    
+    if (window.innerWidth <= 768) {
+      this.closeSidebar();
+    }
+    
+    document.querySelector('.content').scrollTop = 0;
+  },
+
+  bindNav() {
+    document.querySelectorAll('[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => this.navigate(btn.dataset.page));
+    });
+    
+    const homeBtn = document.getElementById('btn-home');
+    if (homeBtn) {
+      homeBtn.addEventListener('click', () => this.navigate('dashboard'));
+    }
+  },
+
+  bindSidebar() {
+    const hamburger = document.getElementById('hamburger-btn');
+    const overlay = document.getElementById('sidebar-overlay');
+    const sidebar = document.getElementById('sidebar');
+    
+    if (hamburger) {
+      hamburger.addEventListener('click', () => {
+        this.sidebarOpen = !this.sidebarOpen;
+        if (this.sidebarOpen) {
+          sidebar.classList.add('open');
+          overlay.classList.add('open');
+        } else {
+          this.closeSidebar();
+        }
+      });
+    }
+    
+    if (overlay) {
+      overlay.addEventListener('click', () => this.closeSidebar());
+    }
+  },
+
+  closeSidebar() {
+    this.sidebarOpen = false;
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('open');
+  },
+
+  openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.add('open');
+  },
+
+  closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.remove('open');
+  },
+
+  bindModals() {
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => this.closeModal(btn.dataset.close));
+    });
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      if (overlay.id !== 'modal-welcome') {
+        overlay.addEventListener('click', e => {
+          if (e.target === overlay) this.closeModal(overlay.id);
+        });
+      }
+    });
+
+    const btnAddTx = document.getElementById('btn-add-tx');
+    const btnAddTx2 = document.getElementById('btn-add-tx-2');
+    const btnAddFixed = document.getElementById('btn-add-fixed');
+    const btnAddGoal = document.getElementById('btn-add-goal');
+
+    if (btnAddTx) btnAddTx.addEventListener('click', () => this.openModal('modal-tx'));
+    if (btnAddTx2) btnAddTx2.addEventListener('click', () => this.openModal('modal-tx'));
+    if (btnAddFixed) btnAddFixed.addEventListener('click', () => this.openModal('modal-fixed'));
+    if (btnAddGoal) btnAddGoal.addEventListener('click', () => this.openModal('modal-goal'));
+  },
+
+  bindForms() {
+    const btnWelcomeSave = document.getElementById('btn-welcome-save');
+    if (btnWelcomeSave) {
+      btnWelcomeSave.addEventListener('click', () => {
+        const balanceInput = document.getElementById('welcome-balance');
+        const balance = parseFloat(balanceInput?.value) || 0;
+        
+        DataService.setInitialBalance(balance);
+        DataService.setVisited();
+        
+        const modal = document.getElementById('modal-welcome');
+        if (modal) modal.classList.remove('open');
+        
+        this.renderAll();
+      });
+    }
+
+    const welcomeBalance = document.getElementById('welcome-balance');
+    if (welcomeBalance) {
+      welcomeBalance.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const btn = document.getElementById('btn-welcome-save');
+          if (btn) btn.click();
+        }
+      });
+    }
+
+    const btnSaveTx = document.getElementById('btn-save-tx');
+    if (btnSaveTx) {
+      btnSaveTx.addEventListener('click', () => {
+        const type = document.getElementById('tx-type')?.value;
+        const amount = parseFloat(document.getElementById('tx-amount')?.value);
+        const category = document.getElementById('tx-category')?.value;
+        const date = document.getElementById('tx-date')?.value;
+        const description = document.getElementById('tx-desc')?.value?.trim();
+
+        if (!amount || amount <= 0) { this.shake('tx-amount'); return; }
+        if (!date) { this.shake('tx-date'); return; }
+
+        DataService.addTransaction({ type, amount, category, date, description });
+        this.closeModal('modal-tx');
+        this.resetForm(['tx-amount', 'tx-desc']);
+        const dateInput = document.getElementById('tx-date');
+        if (dateInput) dateInput.value = new Date().toISOString().split('T')[0];
+        this.renderAll();
+      });
+    }
+
+    const btnSaveFixed = document.getElementById('btn-save-fixed');
+    if (btnSaveFixed) {
+      btnSaveFixed.addEventListener('click', () => {
+        const name = document.getElementById('fixed-name')?.value?.trim();
+        const amount = parseFloat(document.getElementById('fixed-amount')?.value);
+        const day = parseInt(document.getElementById('fixed-day')?.value);
+        const category = document.getElementById('fixed-cat')?.value;
+
+        if (!name) { this.shake('fixed-name'); return; }
+        if (!amount || amount <= 0) { this.shake('fixed-amount'); return; }
+        if (!day || day < 1 || day > 31) { this.shake('fixed-day'); return; }
+
+        DataService.addFixed({ name, amount, day, category });
+        this.closeModal('modal-fixed');
+        this.resetForm(['fixed-name', 'fixed-amount', 'fixed-day']);
+        this.renderAll();
+      });
+    }
+
+    const btnSaveGoal = document.getElementById('btn-save-goal');
+    if (btnSaveGoal) {
+      btnSaveGoal.addEventListener('click', () => {
+        const name = document.getElementById('goal-name')?.value?.trim();
+        const target = parseFloat(document.getElementById('goal-target')?.value);
+
+        if (!name) { this.shake('goal-name'); return; }
+        if (!target || target <= 0) { this.shake('goal-target'); return; }
+
+        DataService.addGoal({ name, target });
+        this.closeModal('modal-goal');
+        this.resetForm(['goal-name', 'goal-target']);
+        this.renderAll();
+      });
+    }
+
+    const btnSaveBalance = document.getElementById('btn-save-balance');
+    if (btnSaveBalance) {
+      btnSaveBalance.addEventListener('click', () => {
+        const balance = parseFloat(document.getElementById('initial-balance-input')?.value) || 0;
+        DataService.setInitialBalance(balance);
+        this.renderAll();
+        
+        const input = document.getElementById('initial-balance-input');
+        if (input) {
+          input.style.borderColor = 'var(--success)';
+          input.style.boxShadow = '0 0 0 4px var(--success-light)';
+          setTimeout(() => {
+            input.style.borderColor = '';
+            input.style.boxShadow = '';
+          }, 1000);
+        }
+      });
+    }
+  },
+
+  bindTheme() {
+    const themeOptions = document.querySelectorAll('.theme-option[data-theme]');
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        themeOptions.forEach(o => o.classList.remove('active'));
+        option.classList.add('active');
+        
+        const theme = option.dataset.theme;
+        DataService.setTheme(theme);
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        setTimeout(() => ChartService.update(), 100);
+      });
+    });
+
+    const modeOptions = document.querySelectorAll('.theme-option[data-mode]');
+    modeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        modeOptions.forEach(o => o.classList.remove('active'));
+        option.classList.add('active');
+        
+        const mode = option.dataset.mode;
+        DataService.setThemeMode(mode);
+        document.documentElement.setAttribute('data-mode', mode);
+        
+        setTimeout(() => ChartService.update(), 100);
+      });
+    });
+  },
+
+  shake(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.borderColor = 'var(--danger)';
+    el.style.boxShadow = '0 0 0 4px var(--danger-light)';
+    el.focus();
+    setTimeout(() => {
+      el.style.borderColor = '';
+      el.style.boxShadow = '';
+    }, 1600);
+  },
+
+  resetForm(ids) {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+  },
+
+  deleteTx(id) {
+    if (confirm('Bu işlemi silmek istediğinize emin misiniz?')) {
+      DataService.deleteTransaction(id);
+      this.renderAll();
+    }
+  },
+
+  deleteFixed(id) {
+    if (confirm('Bu sabit gideri silmek istediğinize emin misiniz?')) {
+      DataService.deleteFixed(id);
+      this.renderAll();
+    }
+  },
+
+  deleteGoal(id) {
+    if (confirm('Bu hedefi silmek istediğinize emin misiniz?')) {
+      DataService.deleteGoal(id);
+      this.renderAll();
+    }
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => App.init());
+</script>
+</body>
+</html>
